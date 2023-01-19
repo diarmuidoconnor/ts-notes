@@ -12,6 +12,8 @@ export function addtoNumberArray(nums: number[], inc: number) {
   return newNums;
 }
 
+// --------------------
+
 // Arrow functions
 export const addStrings = (str1: string, str2: string = ""): string =>
   `${str1} ${str2}`;
@@ -20,7 +22,7 @@ export const addStrings = (str1: string, str2: string = ""): string =>
 export const format = (title: string, param: string | number): string =>
   `${title} ${param}`;
 
-// void is return type when nothing returned
+// void is return type when nothing is returned
 export const printFormat = (title: string, param: string | number): void => {
   console.log(format(title, param));
 };

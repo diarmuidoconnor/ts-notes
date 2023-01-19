@@ -51,7 +51,9 @@ function ranker<T>(element: T[], ranker: (e: T) => number): T[] {
   return result;
 }
 
-const peopleByAge2 = ranker<Person>([jane,joe,jill],(p) =>
+// Return type is inferred - use cmd-k,i
+const peopleByAge2 = ranker<Person>
+([jane,joe,jill],(p) =>
 p.age ? p.age : 30 )
 
 console.log(peopleByAge2)
