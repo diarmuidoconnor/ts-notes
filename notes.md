@@ -6,7 +6,7 @@ npm install -D ts-node
 npx tsc --init
 
  npx ts-node src/basics.ts   # Run TS script
-
+npx ts-node --esm ...... when code has ESM imports
 # Type checking only happens at COMPILE-TIME. Use tsc to generate js equivalent of TS file, and check JS code with JS test file
 npx tsc src/functions/basics.ts
 npx tsc src/functions/basic-test.ts 

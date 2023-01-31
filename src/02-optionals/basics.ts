@@ -1,13 +1,5 @@
 // ? denotes an optional element
 
-// Optional parameter
-function printIngredient(quantity: string, ingredient: string, extra?: string) {
-  console.log(`${quantity} ${ingredient} ${extra ? ` ${extra}` : ""}`);
-}
-
-printIngredient("1C", "Flour");
-printIngredient("1C", "Granukar Sugar", "Can substitute with Castar");
-
 // Optional data structure properties
 interface User {
   id: string;
@@ -48,24 +40,39 @@ const jill: User = {
       },
   };
 
+  // -----------------------
+// Optional parameter
+function printIngredient( ingredient: string, quantity: string, extra?: string) {
+  console.log(`${quantity} ${ingredient} ${extra ? ` ${extra}` : ""}`);
+}
+
+printIngredient( "Flour", "1C");
+printIngredient( "Granukar Sugar", "2TS", "Can substitute with Castar");
+
+
 //  -------------------------
 
-// Custom types.
+// Type Aliases .
 // It allows more readable code whose intent is more apparent.
 // Improves DRY
 // Note syntax
+
 type SocialHandles = {
   facebook: string;
   twitter?: string;
   instragram?: string;
 };
-type Email = string;
+type Addresss = {
+  street: string;
+  town: string
+};
 
+// Suzpxpose users contact is eithe email or social media.
+type Contact = SocialHandles | Addresss
 interface UserTyped {
   id: string;
   name: string;
-  email?: Email;
-  social?: SocialHandles;
+  contact: Contact;
   status : boolean
 }
 
@@ -73,33 +80,34 @@ const kyle: UserTyped = {
   name: "Joe Bloggs",
   id: "1234",
   status: true,
-  social: {
+  contact: {
     facebook: "url",
   },
 };
 
-// Suppose users contact is eithe email or social media.
-
-type Contact = Email | SocialHandles;
-interface UserWithContact {
-  id: string;
-  name: string;
-  contact: Contact;
-}
-
-const jenny : UserWithContact = {
+const jenny : UserTyped = {
     name: "Jenny Bloggs",
     id: "1234",
     contact: {
-      facebook: "url",
+      street: '1 Main Street',
+      town: "Tramore"
     },
+    status: false
   };
 
-  const julia : UserWithContact = {
-    name: "Julia Bloggs",
-    id: "1234",
-    contact: "janet@here.com"
-  };
+type Department = 'Engineering' | 'Sales' | 'Accounts';
+
+const getStaff = (department: Department): UserTyped[] => {
+    if (department === "Accounts") {
+      return [jenny]
+    } else if (department === "Engineering") {
+      return [kyle]
+    }
+    return []
+
+}
+
+console.log(getStaff("Engineering"  )  )
 
 // ---------------------------------  
 

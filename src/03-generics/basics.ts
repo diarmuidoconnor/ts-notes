@@ -37,6 +37,7 @@ const jill: Person = {
 const jane: Person = {
   first: "Jane",
   last: "Bliags",
+  age: 30,
 };
 
 const peopleByAge = personRanker([joe, jill, jane], (p) =>
@@ -52,11 +53,11 @@ function ranker<T>(element: T[], ranker: (e: T) => number): T[] {
 }
 
 // Return type is inferred - use cmd-k,i
-const peopleByAge2 = ranker<Person>
-([jane,joe,jill],(p) =>
-p.age ? p.age : 30 )
+const peopleByAge2 = ranker<Person>([jane, joe, jill], (p) =>
+  p.age ? p.age : 30
+);
 
-console.log(peopleByAge2)
+console.log(peopleByAge2);
 
 // The string type is inferred for T because of array element's type.
 // Use cmd-k cmd-i to confirm
@@ -64,6 +65,33 @@ const stringsByLength2 = ranker(
   ["hello", "to", "the", "universe"],
   (str) => str.length
 );
-console.log(stringsByLength2)
+console.log(stringsByLength2);
 
-// Generics can be applied to unterfaces, types, and classes
+// Generics can be applied to interfaces as well.
+
+interface Microphone {
+  make: string;
+  range: number;
+}
+
+interface Speaker {
+  manufacturer: string;
+  model: string;
+  ports: string[];
+}
+
+interface Box<T> {
+  selveNo: number;
+  content: T[];
+}
+
+const box1: Box<Speaker> = {
+  selveNo: 3,
+  content: [
+    {
+      manufacturer: "SubZero",
+      model: "SZPA-P15",
+      ports: ["USBA", "USBC"],
+    },
+  ],
+};
