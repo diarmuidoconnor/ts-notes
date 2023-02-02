@@ -48,9 +48,13 @@ const friend1 : Friend = {
   }
   
   interface Colleagues {
+    name: string;
+    department: string;
     current: Colleague[];
   }
   const colleagues : Colleagues = {
+    name: 'Joe Bloggs',
+    department: 'Finance',
     current: [colleague1,colleague2]
   }
   

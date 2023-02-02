@@ -1,3 +1,4 @@
+// Functions and HOFs
 interface Friend {
   name: string;
   phone: string;
@@ -45,40 +46,37 @@ const colleague2: Colleague = {
   },
 };
 
-interface Colleagues {
-  current: Colleague[];
-}
-const colleagues: Colleagues = {
-  current: [colleague1, colleague2],
-};
+// ----------------------------------
 
-function logFriend(friend: Friend) {
+function logFriend(friend: Friend) : string {
   return `${friend.name} is at ${friend.phone}`;
 }
 
-// Write a logColleague function the accepts a Colleague parameter
-// and returns a string of the form ..... . Use the arrow function style.
-const logColleague = (colleague: Colleague): string => {
-  return `${colleague.name} is at extension ${colleague.contact.extension}`;
-};
+function logFriendInfer(friend: Friend) {
+  return `${friend.name} is at ${friend.phone}`;
+}
 
 console.log(logFriend(friends[1]));
 
-// Update a colleague's extension. Return the update as a new instance of Colleague
+// Update a colleague's extension. Return the update as a new instance of Colleague.
+
 function changeExtension(
   colleague: Colleague,
   newExtension: number
 ): Colleague {
-  return {
+  const updatedColleague : Colleague = {
     ...colleague,
     contact: {
       ...colleague.contact,
       extension: newExtension,
     },
   };
+  return updatedColleague
 }
 
 console.log(changeExtension(colleague1, 122));
+
+// ----------- HOF ------------
 
 function ringColleagu(
   colleague: Colleague,
@@ -89,9 +87,7 @@ function ringColleagu(
   return connect
 }
 
-const result = ringColleagu(colleague1, (e) => {
-  return true
-})
+const result = ringColleagu(colleague1, (e) => true )
 console.log( result? 'Success' : 'Failed')
 
 export { friends };

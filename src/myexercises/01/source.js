@@ -33,6 +33,8 @@ const colleague2 = {
 }
 
 const colleagues = {
+  name: 'Joe Bloggs',
+  department: 'Finance',
   current: [colleague1,colleague2]
 }
 
