@@ -1,18 +1,19 @@
 // Utility types.
 // See https://www.typescriptlang.org/docs/handbook/utility-types.html
 
-interface MyUser {
+interface UserT {
   name: string;
   id: number;
+  programming: string[];
   email?: string;
 }
 
 // Make everything optional - use cmd-k, cmd-i to confirm
-type MyUserOptionals = Partial<MyUser>;
+type UserTOptionals = Partial<UserT>;
 
-const merge = (user: MyUser, overrides: MyUserOptionals): MyUser => {
+const merge = (UserT: UserT, overrides: UserTOptionals): UserT => {
   return {
-    ...user,
+    ...UserT,
     ...overrides,
   };
 };
@@ -22,6 +23,7 @@ console.log(
     {
       name: "Diarmuid",
       id: 2,
+      programming: ['JS', 'TS'],
       email: "diarmuid@wit.ie",
     },
     {
@@ -30,34 +32,37 @@ console.log(
   )
 );
 
-// Every property is mandatory
-type RequiredMyUser = Required<MyUser>;
+// Have every property mandatory
+type RequiredUserT = Required<UserT>;
+
 
 // Pick a subset of the proerties
-type JustEmailAndName = Pick<MyUser, "email" | "name">;
+type JustEmailAndName = Pick<UserT, "email" | "name">;
 
-function createUser(user: JustEmailAndName): MyUser {
+function createUserT(UserT: JustEmailAndName): UserT {
   return {
-    ...user,
-    id: Math.round(10) * (1000 - 1) + 1, //.toString(36).substring(7)
+    ...UserT,
+    id: Math.floor(Math.round(10)) * (1000 - 1) + 1, 
+    programming: []
   };
 }
 console.log(
-  createUser({
+  createUserT({
     name: "Diarmuid",
     email: "diarmuid@wit.ie",
   })
 );
 
 // All properties except .....
-type UserWithoutID = Omit<MyUser, "id">;
+type UserTProgramming = Omit<UserT, "id" | "email"  >;
 
+// const getUser
 // Record<Keys, Type> - Construct an object type whose keys are of type Keys 
 // and the values are of type Type
-type UserMapById = Record<MyUser["id"], UserWithoutID>
+type UserTMapById = Record<UserT["id"], UserTProgramming>
 
-const mapById = (users: MyUser[]): UserMapById => {
-  return users.reduce((acc, v) => {
+const mapById = (UserTs: UserT[]): UserTMapById => {
+  return UserTs.reduce((acc, v) => {
     const { id, ...other } = v;
     return {
       ...acc,
@@ -71,10 +76,12 @@ console.log(
     {
       id: 1,
       name: "Mr. Foo",
+      programming: ['Python', 'Java']
     },
     {
       id: 2,
       name: "Mrs. Baz",
+      programming: ['Kotlin']
     },
   ])
 );

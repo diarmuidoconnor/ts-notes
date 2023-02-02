@@ -1,4 +1,5 @@
 import { Person } from "../01-functions/myTypes";
+import fetch from "node-fetch";
 
 // Without Generics
 function stringRanker(
@@ -67,6 +68,71 @@ const stringsByLength2 = ranker(
 );
 console.log(stringsByLength2);
 
+// ------------- Promises --------------------------
+interface RandomUserResponse {
+  results: [
+    {
+      gender: "male" | "female";
+      name: {
+        title: string;
+        first: string;
+        last: string;
+      };
+      location: {
+        street: string;
+        city: string;
+        country: string
+      };
+      email: string;
+      login: Object;
+      dob: Object;
+      registered: [Object];
+      phone: string;
+      cell: string;
+      id: Object;
+      picture: string;
+      nat: string;
+    }
+  ];
+}
+
+interface ToDo {
+userId: number;
+id: number;
+title: string;
+completed: boolean
+}
+
+  async function fetchRandomUsers(request: string): Promise<RandomUserResponse> {
+  const response = await fetch(request);
+  const body = (await response.json()) as RandomUserResponse;
+  return body;
+}
+
+async function fetchToDos(request: string) {
+  const response = await fetch(request);
+  const body = (await response.json()) as ToDo[];
+  return body;
+}
+
+const users = await fetchRandomUsers(
+  "https://randomuser.me/api/?results=6"
+);
+
+const usersNameNLocation = users.results.map( (user) => {
+  return ` ${user.name.first} ${user.name.last} from ${user.location.country} `
+
+}  )
+console.log(usersNameNLocation);
+
+const todos = await fetchToDos(
+  "https://jsonplaceholder.typicode.com/todos"
+);
+
+const completedTodos = todos.filter( todo => todo.completed   ).map( todo => todo.title )
+console.log(JSON.stringify(completedTodos)   )
+
+// -------------------------------
 // Generics can be applied to interfaces as well.
 
 interface Microphone {
@@ -95,3 +161,4 @@ const box1: Box<Speaker> = {
     },
   ],
 };
+
