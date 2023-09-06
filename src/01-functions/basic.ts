@@ -1,6 +1,6 @@
 import { Person } from "./myTypes";
 
-// Function parameter and return types
+//-------------- Function parameter and return types ------------------
 function addNumbers(a: number, b: number): number {
   return a + b;
 }
@@ -12,9 +12,8 @@ export function addtoNumberArray(nums: number[], inc: number) {
   return newNums;
 }
 
-// --------------------
-
-// Arrow functions
+// -------------------------------------------------
+// ----------------- Arrow functions ---------------------------------
 export const addStrings = (str1: string, str2: string = ""): string =>
   `${str1} ${str2}`;
 
@@ -38,10 +37,12 @@ export const fetchPerson = (url: string): Promise<Person> =>
     last: "o connor",
   });
 
-
 function introduce(salutation: string, ...names: string[]): string {
   return `${salutation} ${names.join(" ")}`;
 }
+
+console.log(introduce('Ta failte roimh', 'John', 'Paula', 'Rita')  )
+
 // Type checking only happens at compile-time
 export function getName(user: Person): string {
   return `${user.first} ${user.last}`;

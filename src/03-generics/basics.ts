@@ -1,7 +1,15 @@
-import { Person } from "../01-functions/myTypes";
+import { friends } from "../00-basics"
+import { Person, Friend } from "../01-functions/myTypes";
 import fetch from "node-fetch";
 
-// Without Generics
+function older(f: Friend) : string {
+  f.age += 1
+  return `${f.name} is now ${f.age}` 
+}
+
+console.log(older(friends[0]))
+
+// ------------- Without Generics -------------------
 function stringRanker(
   strings: string[],
   ranker: (s: string) => number
@@ -46,16 +54,19 @@ const peopleByAge = personRanker([joe, jill, jane], (p) =>
 );
 console.log(peopleByAge);
 
-// With Generics
+// -------------------With Generics -----------------------------
 
-function ranker<T>(element: T[], ranker: (e: T) => number): T[] {
+function ranker<T>(
+  element: T[], 
+  ranker: (e: T) => number): T[] {
   const result = element.sort((a, b) => ranker(a) - ranker(b));
   return result;
 }
 
 // Return type is inferred - use cmd-k,i
-const peopleByAge2 = ranker<Person>([jane, joe, jill], (p) =>
-  p.age ? p.age : 30
+const peopleByAge2 = ranker<Person>(
+    [jane, joe, jill], 
+    (p) => p.age ? p.age : 30
 );
 
 console.log(peopleByAge2);
@@ -81,7 +92,7 @@ interface RandomUserResponse {
       location: {
         street: string;
         city: string;
-        country: string
+        country: string;
       };
       email: string;
       login: Object;
@@ -97,13 +108,13 @@ interface RandomUserResponse {
 }
 
 interface ToDo {
-userId: number;
-id: number;
-title: string;
-completed: boolean
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
 }
 
-  async function fetchRandomUsers(request: string): Promise<RandomUserResponse> {
+async function fetchRandomUsers(request: string): Promise<RandomUserResponse> {
   const response = await fetch(request);
   const body = (await response.json()) as RandomUserResponse;
   return body;
@@ -115,22 +126,19 @@ async function fetchToDos(request: string) {
   return body;
 }
 
-const users = await fetchRandomUsers(
-  "https://randomuser.me/api/?results=6"
-);
+const users = await fetchRandomUsers("https://randomuser.me/api/?results=6");
 
-const usersNameNLocation = users.results.map( (user) => {
-  return ` ${user.name.first} ${user.name.last} from ${user.location.country} `
-
-}  )
+const usersNameNLocation = users.results.map((user) => {
+  return ` ${user.name.first} ${user.name.last} from ${user.location.country} `;
+});
 console.log(usersNameNLocation);
 
-const todos = await fetchToDos(
-  "https://jsonplaceholder.typicode.com/todos"
-);
+const todos = await fetchToDos("https://jsonplaceholder.typicode.com/todos");
 
-const completedTodos = todos.filter( todo => todo.completed   ).map( todo => todo.title )
-console.log(JSON.stringify(completedTodos)   )
+const completedTodos = todos
+  .filter((todo) => todo.completed)
+  .map((todo) => todo.title);
+console.log(JSON.stringify(completedTodos));
 
 // -------------------------------
 // Generics can be applied to interfaces as well.
@@ -161,4 +169,3 @@ const box1: Box<Speaker> = {
     },
   ],
 };
-

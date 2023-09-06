@@ -1,5 +1,8 @@
 // TYPE ANNOTATIONS
-let myString: string = "diarmuid";
+
+// ------------ Type annotations --------------------
+
+let myString: string = "diarmuid o'connor";
 let myNumber: number = 1;
 // let myNumber2 : number = 'dog';
 
@@ -7,21 +10,24 @@ myNumber += 1;
 
 console.log(myNumber);
 
-// Excellent Intellisense.
-// let result = myValue.upperCase()   // ERROR
 console.log(myString.toUpperCase());
 
+// Excellent Intellisense.
+// let result = myNumber.toUpperCase()   // ERROR
+
 let myBoolean: boolean = true;
-// myBoolean+=1
+// myBoolean+=1      // ERROR
 
-// Intellisense also works at the object data-properties level (later)
+// Intellisense also works at the object properties level (see later)
+
 //------------------------------
-
 // Some useful built-in types
 let myRETest: RegExp = /foo/;
 
+console.log('Reg exp. test = ',myRETest.test('abcfoodef') )
+
 // ----------------------------------
-// Array Type
+// ----------------- Array Type -----------------------------
 let myNums: number[] = [1, 2, 3, 5];
 
 let myStrings: Array<string> = ["hello", "world"];
@@ -29,23 +35,23 @@ let myStrings: Array<string> = ["hello", "world"];
 
 // myNums.push("three")   // ERROR
 
-// -------------------------------
-// Data) Interfaces
+// -------------------------------------------------------         /
+// ----------------- (Data) Interfaces ------------------------
 interface Person {
   first: string;
   last: string;
 }
 
-const myPerson: Person = {
+const me: Person = {
   first: "diarmuid",
   last: "o connor",
 };
 
 // Hinting support avoids runtime undefined errors
-// myPerson.
+// const surName = me.
 
-// ERROR - Dynamic object expansion is not supported.
-// myPerson.address = '1 Main street'
+// ERROR - Dynamic object expansion is not supported. See later for alternative.
+// me.address = '1 Main street'
 
 interface Student {
   name: string;
@@ -53,34 +59,35 @@ interface Student {
   modules: string[];
 }
 
-const student1: Student = {
+const studentX: Student = {
   name: "Joe Bloggs",
   id: 123456,
   modules: ["Programming", "Databases", "Operating Systems"],
 };
 
 interface Result {
-  name: string;
+  moduleName: string;
   grade: number;
 }
 
 interface StudentProfile {
-  name: "Joe Bloggs";
-  id: 123456;
-  modules: Result[];
+  name: Person;
+  id: number;
+  resultss: Result[];
 }
 
-const student2: StudentProfile = {
-  name: "Joe Bloggs",
+const studentYProfile: StudentProfile = {
+  name: { first: 'Jane', last: 'Bloggs' },
   id: 123456,
-  modules: [
-    { name: "Programming", grade: 65 },
-    { name: "Databases", grade: 70 },
-    { name: "Operating Systems", grade: 58 },
+  resultss: [
+    { moduleName: "Programming", grade: 65 },
+    { moduleName: "Databases", grade: 70 },
+    // { name: "Operating Systems", grade: 58 },
   ],
 };
+
 //-------------------------
-// Type Aliases
+// ---------------- Type Aliases ----------------------
 
 type Course = {
   title: string;
@@ -91,19 +98,23 @@ type Course = {
 type AcademicEntity = Student | Course;  // Union type
 
 function processEntity(entity: AcademicEntity) {
-  //
+  if ( 'code' in entity) {
+    // process Course
+  } else {
+    // process Student
+  }
 }
-processEntity(student1);
+processEntity(studentX);
 processEntity({
   title: "Computer Science",
   code: "AD1234",
   qualification: "BSc",
 });
 
-// Lots more later!!!!!
+// More on type aliases later
 
 // -----------------------------------------------
-// Type inferencing.
+// --------------- Type inferencing ---------------------------
 
 // Let the compiler do the work!!  Spare the developer!!
 
@@ -114,7 +125,8 @@ let len = aString.length;
 
 // aString.pop()   // ERROR - inferred type does not have a pop method.
 
-// Type for doubled and num are inferred
+// Inferencing can work through this expression to 
+// determine types for doubled and num.
 const doubled = myNums.map((num) => num * 2);
 
 const friends: Person[] = [
