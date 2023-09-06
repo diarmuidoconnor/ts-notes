@@ -125,8 +125,8 @@ let len = aString.length;
 
 // aString.pop()   // ERROR - inferred type does not have a pop method.
 
-// Inferencing can work through this expression to 
-// determine types for doubled and num.
+// Inferencing can work through these HOF expression to 
+// determine types for return values.
 const doubled = myNums.map((num) => num * 2);
 
 const friends: Person[] = [
@@ -134,16 +134,18 @@ const friends: Person[] = [
   { first: "kyle", last: "dwyer" },
   { first: "jane", last: "smith" },
 ];
-const sFriends = friends.filter((friend) => friend.last.startsWith("s"));
+const friendsWiths = friends.filter((friend) => friend.last.startsWith("s"));
+const firstNames = friends.map((friend) => friend.first);
 
-console.log(sFriends);
+console.log(friendsWiths);
 
 // --------------------------------
 
 // Record Utility type for declaring expandable maps
-const data: Record<string, number> = {
+const transactionCodes: Record<string, number> = {
   sale: 10, // event: code
   delivery: 20,
+  returnedGoods : 99
 };
 
-data["reorder"] = 5;
+transactionCodes["reorder"] = 5;
